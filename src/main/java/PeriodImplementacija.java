@@ -1,8 +1,6 @@
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PeriodImplementacija extends ObradaTermina{
 
@@ -18,9 +16,11 @@ public class PeriodImplementacija extends ObradaTermina{
 
     private LocalDateTime krajDan;
 
-    private List<Termin> raspored = getRaspored();
+    //private List<Termin> raspored = getRaspored();
 
     private DayOfWeek danEng;
+
+
 
 
 
@@ -93,6 +93,14 @@ public class PeriodImplementacija extends ObradaTermina{
 
         krajDan = LocalDateTime.of(godina,mesec,dan,0,0);
 
+        Map<String,String> dodaci = new HashMap<>();
+
+        for (int h = 6 ; h < stringovi.size(); h++){
+            String[] splitovi = stringovi.get(h).split(":");
+            dodaci.put(splitovi[0],splitovi[1]);
+            //System.out.println(dodaci);
+        }
+
         for (LocalDateTime datumm = pocetakDan; datumm.isBefore(krajDan); datumm = datumm.plusDays(1)){
                 if(datumm.getDayOfWeek() == danEng){
                     LocalDateTime krajj = LocalDateTime.of(datumm.getYear(),datumm.getMonth(),datumm.getDayOfMonth(),krajSati,0);
@@ -100,8 +108,9 @@ public class PeriodImplementacija extends ObradaTermina{
 
                     //System.out.println(pocetakk);
                     //System.out.println(krajj);
-                    Termin termin = new Termin(null,pocetakk,krajj);
-                    raspored.add(termin);
+                    Termin termin = new Termin(null,pocetakk,krajj,dodaci);
+                    List<Termin> ddd = getRaspored();
+                    ddd.add(termin);
                 }
 
         }
@@ -115,10 +124,12 @@ public class PeriodImplementacija extends ObradaTermina{
 
         //System.out.println(pocetakDan.getDayOfWeek());
 
-        for (Termin t : raspored){
+
+            List<Termin> ispis = getRaspored();
+        for (Termin t : ispis){
             System.out.println(t);
         }
-
+        //dodaci.clear();
         return true;
     }
 
