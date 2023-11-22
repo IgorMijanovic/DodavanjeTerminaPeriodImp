@@ -23,7 +23,10 @@ public class PeriodImplementacija extends ObradaTermina{
     private DayOfWeek danEng;
 
 
-
+    static {
+        PeriodImplementacija impl2 = new PeriodImplementacija();
+        setObj(impl2);
+    }
 
 
 
