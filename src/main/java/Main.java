@@ -5,11 +5,13 @@ public class Main {
         PeriodImplementacija p = new PeriodImplementacija();
         p.initRaspored();
 
-        //p.dodajNoviTermin("s1","nedelja","13","15","01.10.2023","25.10.2023","Profesor:Igor Mijanovic","Tip:predavanje");
+        p.dodajNoviTermin("s1","petak","10","11","20.12.2023","25.12.2023","Profesor:Igor Mijanovic","Tip:predavanje");
 
         //p.dodajNoviTermin("s2","sreda","13","15","01.10.2023","25.10.2023","Tip:predavanje");
 
         //p.exportCSV("src/main/resources/Desktop.csv","s1");
+
+       // p.exportJson("bbb.csv");
 
         //p.exportJson("C:\\Users\\aleks\\Desktop\\DodavanjeTerminaPeriodImp\\src\\main\\resources\\proba.json","s1");
 

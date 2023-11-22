@@ -28,7 +28,28 @@ public class PeriodImplementacija extends ObradaTermina{
         setObj(impl2);
     }
 
+    private boolean proveriNeradneDane(Termin novi){
+        for(LocalDateTime ldt: getNeradniDani()){
+            if(ldt.getYear() == novi.getPocetak().getYear()
+                    && ldt.getMonth() == novi.getPocetak().getMonth()
+                    && ldt.getDayOfMonth() == novi.getPocetak().getDayOfMonth()){
+                return true;
+            }
+        }
+        return false;
 
+    }
+
+    private boolean proveriRadnoVreme(Termin novi){
+        if((novi.getPocetak().getHour() > getPocetakRadnogVremena() && novi.getPocetak().getHour() < getKrajRadnogVremena())
+                && (novi.getKraj().getHour() > getPocetakRadnogVremena() && novi.getKraj().getHour() < getKrajRadnogVremena())){
+            System.out.println("true");
+            return  true;
+        }
+        System.out.println("false");
+        return false;
+
+    }
 
     @Override
     public boolean dodajNoviTermin(String... strings) {
@@ -132,7 +153,9 @@ public class PeriodImplementacija extends ObradaTermina{
                 //System.out.println(krajj);
                 Termin termin = new Termin(prostor,pocetakk,krajj,dodaci);
                 termin.setTipZakazivanja(PrvaDrugaImp.DRIGA_IMP);
+
                 //System.out.println(termin);
+                //System.out.println(proveriRadnoVreme(termin));
                 int flag = 1;
                 List<Termin> provera = getRaspored();
                 for (Termin t: provera){
@@ -141,7 +164,10 @@ public class PeriodImplementacija extends ObradaTermina{
                         System.out.println("Ovaj termin nije dodat jer se preklapa sa drugim terminom" + " " + termin);
                     }
                 }
-                if (flag == 1 || getRaspored().isEmpty()) {
+                if (!proveriRadnoVreme(termin) || proveriNeradneDane(termin)){
+                    flag =0;
+                }
+                if (flag == 1) {
                     List<Termin> ddd = getRaspored();
                     ddd.add(termin);
                 }
@@ -159,6 +185,7 @@ public class PeriodImplementacija extends ObradaTermina{
                     //System.out.println(krajj);
                     Termin termin = new Termin(prostor,pocetakk,krajj,dodaci);
                     termin.setTipZakazivanja(PrvaDrugaImp.DRIGA_IMP);
+
                     //System.out.println(termin);
                     //int flag = 1;
                     List<Termin> provera = getRaspored();
@@ -169,7 +196,9 @@ public class PeriodImplementacija extends ObradaTermina{
                                 return false;
                             }
                         }
-                        zaDodavanje.add(termin);
+                        if (proveriRadnoVreme(termin) && !proveriNeradneDane(termin)){
+                            zaDodavanje.add(termin);
+                        }
                         //if (flag == 1 || getRaspored().isEmpty()) {
                             //List<Termin> ddd = getRaspored();
                             //ddd.add(termin);
